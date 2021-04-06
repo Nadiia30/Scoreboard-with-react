@@ -74,13 +74,19 @@ prevPlayerId = 4;
     });
   }
 
+  getHighScore = () => {
+    const scores = this.state.players.map(p => p.score);
+    const highScore = Math.max(...scores);
+    if(highScore){
+      return highScore;
+    } 
+    return null;
+  }
   render() {
+    const highScore = this.getHighScore();
     return (
       <div className="scoreboard">
-        <Header 
-          title="Scoreboard" 
-          players={this.state.players}
-        />
+        <Header players={this.state.players}/>
   
         {/* Players list */}
         {this.state.players.map( (player,index) =>
@@ -91,7 +97,8 @@ prevPlayerId = 4;
             index={index}
             changeScore={this.handleScoreChange}
             removePlayer={this.handleRemovePlayer}  
-            score={player.score}         
+            score={player.score} 
+            isHighScore={highScore === player.score}        
           />
         )}
 
